@@ -1,0 +1,34 @@
+.checkers-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 90%;
+    margin: 2% auto;
+    border: 1px solid black;
+    
+}
+
+.checkers-row-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+.checkers-object-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dark {
+    background-color: #a88a63;
+}
+
+.light {
+    background-color: #ffddb0;
+}
+
+

@@ -1,0 +1,11 @@
+.setchecker-white-pawn {
+    width: 40px;
+    height: 40px;
+    color: white;
+}
+
+.setchecker-black-pawn {
+    width: 40px;
+    height: 40px;
+    color: black;
+}
