@@ -20,74 +20,89 @@ class Cube extends Component {
     setPiece = (pos) => {
         console.log(pos)
 
-        var newFirstStr;
-        var newFirstNumber;
-        var newSecondStr;
-        var newSecondNumber;
+        // var newFirstStr;
+        // var newFirstNumber;
+        // var newSecondStr;
+        // var newSecondNumber;
 
 
-        if (this.state.locationWhite.includes(pos)) { // for example: b2
+        if (this.state.locationWhite.includes(pos)) { // for example: b7
 
-            let indexOfX = this.props.boardX.indexOf(pos[0]) // pos[0] = b, indexOfX => 1           
+            let indexOfX = this.props.boardX.indexOf(pos[0]) // pos[0] = b, indexOfX => 7       
             let indexOfY = this.props.boardY.indexOf(parseInt(pos[1])) // pos[1] = 7, indexOfY => 6  
 
-            var letterAfter = this.props.boardX[indexOfX + 1] // c
-            var numberAfter = this.props.boardY[indexOfY + 1] // 8
-            var letterBefore = this.props.boardX[indexOfX - 1] // a
-            var numberBefore = this.props.boardY[indexOfY - 1] // 6
-
-            if(!numberAfter) { // in case 2 edges pawn is selected
-                if(letterBefore) {
-                    newSecondStr = letterAfter + numberBefore 
-                    newSecondNumber = letterBefore + numberBefore 
-                    console.log(newSecondStr, newSecondNumber) 
-                }
-                else { // in case 1 edge pawn is selected
-                    newSecondStr = letterAfter + numberBefore 
-                    console.log(newSecondStr) 
-                }
+            let letterAfter = this.props.boardX[indexOfX + 1] // c
+            let numberAfter = this.props.boardY[indexOfY + 1] // 8
+            let letterBefore = this.props.boardX[indexOfX - 1] // a
+            let numberBefore = this.props.boardY[indexOfY - 1] // 6
+            
+            let possibleMoves = [];
+            
+            if(letterAfter) {
+                possibleMoves.push(numberBefore ? (letterAfter + numberBefore) : null ) // 6 => c6
+                possibleMoves.push(numberAfter ? (letterAfter + numberAfter) : null ) // 8 => c8
             }
 
-            else if(!letterAfter) { // in case 2 edges pawn is selected
-                newFirstNumber = letterBefore + numberAfter
-                newSecondNumber = letterBefore + numberBefore 
-                console.log(newFirstNumber, newSecondNumber) 
-
+            if(letterBefore) {
+                possibleMoves.push(numberBefore ? (letterBefore + numberBefore) : null ) // 6 => a6
+                possibleMoves.push(numberAfter ? (letterBefore + numberAfter) : null ) // 8 => a8
             }
+            
+            possibleMoves = possibleMoves.filter(n => n) // filter 'null' out
+            console.log(possibleMoves)
 
-            else if(!letterBefore) { // in case 2 edges pawn is selected
-                if(numberAfter) {
-                    newFirstStr = letterAfter + numberAfter
-                    newSecondStr = letterAfter + numberBefore
-                    console.log(newFirstStr, newSecondStr) 
-                }
-                else { // in case 1 edge pawn is selected
-                    newFirstStr = letterAfter + numberAfter
-                    console.log(newFirstStr)
-                }
-            }
+            // if(!numberAfter) { // in case 2 edges pawn is selected
+            //     if(letterBefore) {
+            //         newSecondStr = letterAfter + numberBefore 
+            //         newSecondNumber = letterBefore + numberBefore 
+            //         console.log(newSecondStr, newSecondNumber) 
+            //     }
+            //     else { // in case 1 edge pawn is selected
+            //         newSecondStr = letterAfter + numberBefore 
+            //         console.log(newSecondStr) 
+            //     }
+            // }
 
-            else if(!numberBefore) { // in case 2 edges pawn is selected
-                newFirstStr = letterAfter + numberAfter   
-                newFirstNumber = letterBefore + numberAfter
-                console.log(newFirstStr, newFirstNumber) 
+            // else if(!letterAfter) { // in case 2 edges pawn is selected
+            //     newFirstNumber = letterBefore + numberAfter
+            //     newSecondNumber = letterBefore + numberBefore 
+            //     console.log(newFirstNumber, newSecondNumber) 
 
-            }
+            // }
 
-            else if(!numberAfter && !letterBefore) {
-                newSecondStr = letterAfter + numberBefore 
-                console.log(newSecondStr)
+            // else if(!letterBefore) { // in case 2 edges pawn is selected
+            //     if(numberAfter) {
+            //         newFirstStr = letterAfter + numberAfter
+            //         newSecondStr = letterAfter + numberBefore
+            //         console.log(newFirstStr, newSecondStr) 
+            //     }
+            //     else { // in case 1 edge pawn is selected
+            //         newFirstStr = letterAfter + numberAfter
+            //         console.log(newFirstStr)
+            //     }
+            // }
 
-            }
+            // else if(!numberBefore) { // in case 2 edges pawn is selected
+            //     newFirstStr = letterAfter + numberAfter   
+            //     newFirstNumber = letterBefore + numberAfter
+            //     console.log(newFirstStr, newFirstNumber) 
 
-            else{ // in case 4 edges pawn is selected
-                newFirstStr = letterAfter + numberAfter // c8    
-                newFirstNumber = letterBefore + numberAfter // a8
-                newSecondStr = letterAfter + numberBefore //c6
-                newSecondNumber = letterBefore + numberBefore // a6   
-                console.log(newFirstStr, newSecondStr, newFirstNumber, newSecondNumber) 
-                // select edge pawn is missing
-            }
+            // }
+
+            // else if(!numberAfter && !letterBefore) {
+            //     newSecondStr = letterAfter + numberBefore 
+            //     console.log(newSecondStr)
+
+            // }
+
+            // else{ // in case 4 edges pawn is selected
+            //     newFirstStr = letterAfter + numberAfter // c8    
+            //     newFirstNumber = letterBefore + numberAfter // a8
+            //     newSecondStr = letterAfter + numberBefore //c6
+            //     newSecondNumber = letterBefore + numberBefore // a6   
+            //     console.log(newFirstStr, newSecondStr, newFirstNumber, newSecondNumber) 
+            //     // select edge pawn is missing
+            // }
 
         }
         else if (this.state2.locationBlack.includes(pos)) {
