@@ -16,7 +16,6 @@ export default function Board() {
     const listOfWhite = ['a6', 'a8', 'b7', 'c6', 'c8', 'd7', 'e6', 'e8', 'f7', 'g6', 'g8', 'h7']
     const listOfBlack = ['h1', 'h3', 'g2', 'f1', 'f3', 'e2', 'd1', 'd3', 'c2', 'b1', 'b3', 'a2']
 
-
     useEffect(() => {
         const listOfWhite = ['a6', 'a8', 'b7', 'c6', 'c8', 'd7', 'e6', 'e8', 'f7', 'g6', 'g8', 'h7']
         const listOfBlack = ['h1', 'h3', 'g2', 'f1', 'f3', 'e2', 'd1', 'd3', 'c2', 'b1', 'b3', 'a2']
@@ -41,6 +40,7 @@ export default function Board() {
                                     xIndex={xIndex}
                                     yIndex={yIndex}
                                     boardY={boardY}
+                                    boardX={boardX}
                                     listOfWhite={listOfWhite}
                                     listOfBlack={listOfBlack}
                                 />

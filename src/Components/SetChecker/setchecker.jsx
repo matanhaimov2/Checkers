@@ -23,7 +23,7 @@ class SetChecker extends Component {
         return (
             <div>
                 {/* do here if color is black it will show a picture of black piece and if the color is white it will show an img of white piece */}
-                {this.state.location===this.props.pos && this.state.color==='White' ? (
+                {this.state.color==='White' ? (
                     <GiPawn className='setchecker-white-pawn'/>
                 ) : (
                     <GiPawn className='setchecker-black-pawn'/>
