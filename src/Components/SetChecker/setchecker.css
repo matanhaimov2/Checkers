@@ -2,10 +2,13 @@
     width: 40px;
     height: 40px;
     color: white;
+    cursor: pointer;
 }
 
 .setchecker-black-pawn {
     width: 40px;
     height: 40px;
     color: black;
+    cursor: pointer;
+
 }
