@@ -26,7 +26,7 @@ class Cube extends Component {
         console.log(previousPossibleMoves) // how is there something if it accours before definition!!!
 
         // if theres open previousPossibleMoves to delete
-        if(previousPossibleMoves) {
+        if(previousPossibleMoves && previousPossibleMoves.length > 0) {
             console.log('are you in?')
             
             // delete style for each one
@@ -99,9 +99,12 @@ class Cube extends Component {
                 document.getElementById(filteredPossibleMoves[i]).style.background  = "blue"; 
             }
 
-            this.setState({
-                previousPossibleMoves: previousPossibleMoves.push(filteredPossibleMoves)
-            })      
+            for(let filteredPossibleMove of filteredPossibleMoves) {
+                this.setState({
+                    previousPossibleMoves: previousPossibleMoves.push(filteredPossibleMove)
+                })    
+            }
+             
 
             console.log(previousPossibleMoves)
 

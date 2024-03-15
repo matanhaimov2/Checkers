@@ -16,15 +16,6 @@ export default function Board() {
     const listOfWhite = ['a6', 'a8', 'b7', 'c6', 'c8', 'd7', 'e6', 'e8', 'f7', 'g6', 'g8', 'h7']
     const listOfBlack = ['h1', 'h3', 'g2', 'f1', 'f3', 'e2', 'd1', 'd3', 'c2', 'b1', 'b3', 'a2']
 
-    useEffect(() => {
-        const listOfWhite = ['a6', 'a8', 'b7', 'c6', 'c8', 'd7', 'e6', 'e8', 'f7', 'g6', 'g8', 'h7']
-        const listOfBlack = ['h1', 'h3', 'g2', 'f1', 'f3', 'e2', 'd1', 'd3', 'c2', 'b1', 'b3', 'a2']
-        
-        // function that will set the picec for black and for white  
-        // listof whtie= ['a1',b2', ...]
-        // list of black =['a8','b8', ...]
-
-    }, [])
 
     // create function 
     return (
@@ -42,7 +33,7 @@ export default function Board() {
                                     boardY={boardY}
                                     boardX={boardX}
                                     listOfWhite={listOfWhite}
-                                    listOfBlack={listOfBlack}
+                                    listOfBlack={listOfBlack} 
                                 />
                             )
                         })}
