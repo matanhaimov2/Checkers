@@ -7,13 +7,12 @@ import SetChecker from '../../../Components/SetChecker/setchecker';
 // This is one cube in the board
 class Cube extends Component {
 
-    state = {
+    stateWhite = {
         content: 'White', // white black nothing
         locationWhite: this.props.listOfWhite, // a1,b1...
-        previousPossibleMoves: [],
     }
 
-    state2 = {
+    stateBlack = {
         content: 'Black', // white black nothing
         locationBlack: this.props.listOfBlack, // a1,b1...
     }
@@ -21,31 +20,18 @@ class Cube extends Component {
     setPiece = (pos) => {
         console.log(pos)
 
-        const { previousPossibleMoves } = this.state
-
-        console.log(previousPossibleMoves) // how is there something if it accours before definition!!!
-
-        // if theres open previousPossibleMoves to delete
-        if(previousPossibleMoves && previousPossibleMoves.length > 0) {
-            console.log('are you in?')
-            
-            // delete style for each one
-            for(let i = 0; i<previousPossibleMoves.length; i++) {
-                console.log('are you in alsooo?')
-
-                document.getElementById(previousPossibleMoves[i]).style.background  = '';        
+        // gets previousPossibleMoves from localstorage
+        let previousPossibleMoveLS = localStorage.getItem("previousPossibleMoves");
+        // if there perviousPossibleMoves => remove blue background color
+        if(previousPossibleMoveLS) {
+            for(let previousPossibleMove of JSON.parse(previousPossibleMoveLS)) {
+                console.log('previousPossibleMoves: ' + previousPossibleMove)
+                document.getElementById(previousPossibleMove).style.backgroundColor = "";
             }
-            
-            // set previousPossibleMoves to none for next move
-            this.setState({
-                previousPossibleMoves : []
-            })
-
-            console.log(previousPossibleMoves)
         }
 
         // if pawn is selected
-        if(this.state.locationWhite.includes(pos) || this.state2.locationBlack.includes(pos)) {
+        if(this.stateWhite.locationWhite.includes(pos) || this.stateBlack.locationBlack.includes(pos)) {
             let indexOfX = this.props.boardX.indexOf(pos[0]) // pos[0] = b, indexOfX => 7       
             let indexOfY = this.props.boardY.indexOf(parseInt(pos[1])) // pos[1] = 7, indexOfY => 6  
 
@@ -56,19 +42,19 @@ class Cube extends Component {
 
             let possibleMoves = [];
             let filteredPossibleMoves = [];
+            let previousPossibleMoves = [];
 
             // give player optionsToMove, but filter moving forwards (so player won't move backwards)
             if (letterAfter) {
-                if(this.state.locationWhite.includes(pos)) { // if pawn is white
+                if(this.stateWhite.locationWhite.includes(pos)) { // if pawn is white
                     possibleMoves.push(numberBefore ? (letterAfter + numberBefore) : null) // 6 => c6
                 }
                 else { // if pawn is black
                     possibleMoves.push(numberAfter ? (letterAfter + numberAfter) : null) // 8 => c8
                 }
             }
-
             if (letterBefore) {
-                if(this.state.locationWhite.includes(pos)) { // if pawn is white
+                if(this.stateWhite.locationWhite.includes(pos)) { // if pawn is white
                     possibleMoves.push(numberBefore ? (letterBefore + numberBefore) : null) // 6 => a6
                 }
                 else { // if pawn is black
@@ -77,36 +63,32 @@ class Cube extends Component {
             }
 
             possibleMoves = possibleMoves.filter(n => n) // filter 'null' out
-            // console.log(possibleMoves)
+            console.log(possibleMoves)
 
             // filter own pawns so player won't be able to move on it's own pawns
-            for (let i = 0; i<possibleMoves.length; i++) {
-                if(this.state.locationWhite.includes(pos)) { // if pawn is white
-                    var filterOwnPawns = this.state.locationWhite.includes(possibleMoves[i])
+            for (let possibleMove of possibleMoves) {
+                if(this.stateWhite.locationWhite.includes(pos)) { // if pawn is white
+                    var filterOwnPawns = this.stateWhite.locationWhite.includes(possibleMove)
                 }
                 else { // if pawn is black
-                    var filterOwnPawns = this.state2.locationBlack.includes(possibleMoves[i])
+                    var filterOwnPawns = this.stateBlack.locationBlack.includes(possibleMove)
                 }
 
                 if (!filterOwnPawns) { // if pawn is not on the list => add pawn to filteredPossibleMoves
-                    filteredPossibleMoves.push(possibleMoves[i])
+                    filteredPossibleMoves.push(possibleMove)
                 }
             }
-            // console.log(filteredPossibleMoves) // filtered possibleMoves 
+            console.log(filteredPossibleMoves) // filtered possibleMoves 
 
             // add style for possible moves
-            for(let i = 0; i<filteredPossibleMoves.length; i++) {
-                document.getElementById(filteredPossibleMoves[i]).style.background  = "blue"; 
-            }
-
             for(let filteredPossibleMove of filteredPossibleMoves) {
-                this.setState({
-                    previousPossibleMoves: previousPossibleMoves.push(filteredPossibleMove)
-                })    
-            }
-             
+                document.getElementById(filteredPossibleMove).style.background  = "blue"; 
 
-            console.log(previousPossibleMoves)
+                previousPossibleMoves.push(filteredPossibleMove)
+            }
+            // save previousPossibleMoves in localstorage
+            localStorage.setItem("previousPossibleMoves", JSON.stringify(previousPossibleMoves));
+
 
         }
 
@@ -122,8 +104,8 @@ class Cube extends Component {
 
     render() {
         const { pos } = this.props;
-        const { locationWhite } = this.state;
-        const { locationBlack } = this.state2;
+        const { locationWhite } = this.stateWhite;
+        const { locationBlack } = this.stateBlack;
 
 
         return (
@@ -131,13 +113,13 @@ class Cube extends Component {
 
                 {locationWhite.map((item, i) => (
                     item === pos && (
-                        <SetChecker key={i} color={this.state.content} />
+                        <SetChecker key={i} color={this.stateWhite.content} />
                     )
                 ))}
 
                 {locationBlack.map((item, i) => (
                     item === pos && (
-                        <SetChecker key={i} color={this.state2.content} />
+                        <SetChecker key={i} color={this.stateBlack.content} />
                     )
                 ))}
 
