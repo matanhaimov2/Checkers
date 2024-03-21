@@ -16,7 +16,7 @@ class Cube extends Component {
         content: 'Black', // white black nothing
         locationBlack: this.props.listOfBlack, // a1,b1...
     }
-
+    
     setPiece = (pos) => {
         console.log(pos)
 
@@ -25,9 +25,9 @@ class Cube extends Component {
         // if there perviousPossibleMoves => remove blue background color
         if(previousPossibleMoveLS) {
             for(let previousPossibleMove of JSON.parse(previousPossibleMoveLS)) {
-                console.log('previousPossibleMoves: ' + previousPossibleMove)
                 document.getElementById(previousPossibleMove).style.backgroundColor = "";
             }
+            console.log('previousPossibleMoves: ' + previousPossibleMoveLS)
         }
 
         // if pawn is selected
@@ -89,12 +89,52 @@ class Cube extends Component {
             // save previousPossibleMoves in localstorage
             localStorage.setItem("previousPossibleMoves", JSON.stringify(previousPossibleMoves));
 
-
+            localStorage.setItem("InitialPos", pos);
         }
 
+        
         // if empty cube is selected
         else {
-            console.log('do nothing')
+            console.log(pos)
+
+            // gets previousPossibleMoves from localstorage
+            let previousPossibleMoveLS = localStorage.getItem("previousPossibleMoves");
+            console.log(previousPossibleMoveLS)
+
+            let InitialPosLS = localStorage.getItem("InitialPos");
+
+            if(previousPossibleMoveLS) {
+                for(let possibleMove of JSON.parse(previousPossibleMoveLS)) {
+                    if(possibleMove===pos) {
+                        console.log('player did select this cube', possibleMove)
+                        console.log(this.stateWhite.locationWhite)
+
+                        for(let i = 0; i<this.stateWhite.locationWhite.length; i++) {
+
+                            console.log(this.stateWhite.locationWhite[i], InitialPosLS)
+                            
+                            if(this.stateWhite.locationWhite[i]===InitialPosLS) {
+                                this.setState({
+                                    locationWhite: this.stateWhite.locationWhite[i] = pos
+                                });  
+                            }
+
+                            // document.getElementById(InitialPosLS).remove();
+                        }
+                        console.log(this.stateWhite.locationWhite)
+                        
+                    }
+                    else {
+                        console.log('player didnt select this cube', pos)
+                    }
+                }
+            }
+            else {
+                console.log('do nothing', pos)
+            }
+
+
+
         }
     }
 
@@ -103,14 +143,15 @@ class Cube extends Component {
     }
 
     render() {
+
         const { pos } = this.props;
         const { locationWhite } = this.stateWhite;
         const { locationBlack } = this.stateBlack;
 
 
         return (
-            <div id={pos} key={pos} pos={this.props.pos} onClick={() => this.setPiece(pos)} className={`checkers-object-wrapper ${(((this.props.xIndex) + (this.props.boardY.length - (this.props.yIndex + 1))) % 2 === 0 ? "dark" : "light")}`}>
-
+            <div id={pos} key={pos} pos={pos} onClick={() => this.setPiece(pos)} className={`checkers-object-wrapper ${(((this.props.xIndex) + (this.props.boardY.length - (this.props.yIndex + 1))) % 2 === 0 ? "dark" : "light")}`}>
+                
                 {locationWhite.map((item, i) => (
                     item === pos && (
                         <SetChecker key={i} color={this.stateWhite.content} />

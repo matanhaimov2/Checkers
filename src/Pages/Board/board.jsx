@@ -13,8 +13,12 @@ export default function Board() {
     const boardX = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
     // create a function that first places the pieces. - by placing you need to set in the pos the a1...
-    const listOfWhite = ['a6', 'a8', 'b7', 'c6', 'c8', 'd7', 'e6', 'e8', 'f7', 'g6', 'g8', 'h7']
-    const listOfBlack = ['h1', 'h3', 'g2', 'f1', 'f3', 'e2', 'd1', 'd3', 'c2', 'b1', 'b3', 'a2']
+    var listOfWhite = ['a6', 'a8', 'b7', 'c6', 'c8', 'd7', 'e6', 'e8', 'f7', 'g6', 'g8', 'h7']
+    var listOfBlack = ['h1', 'h3', 'g2', 'f1', 'f3', 'e2', 'd1', 'd3', 'c2', 'b1', 'b3', 'a2']
+
+    useEffect(() => {
+        console.log(listOfWhite)
+    }, [listOfWhite]);
 
 
     // create function 
