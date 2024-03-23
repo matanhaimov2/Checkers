@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
 // Pages
-import Checkers from './Pages/Board/board';
+import Checkers from './Pages/GameLogic/gamelogic';
 
 // Functions
 function checkers() {
